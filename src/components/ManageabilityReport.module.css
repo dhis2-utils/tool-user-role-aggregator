@@ -1,0 +1,42 @@
+.report {
+    margin-block-start: var(--spacers-dp16);
+}
+
+.summary {
+    margin: 0;
+    color: var(--colors-grey700);
+    font-size: 13px;
+}
+
+.verdict {
+    margin-block: var(--spacers-dp8);
+    font-weight: 500;
+}
+
+.listTitle {
+    margin-block: var(--spacers-dp16) var(--spacers-dp8);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.roleList {
+    margin: 0;
+    padding-inline-start: var(--spacers-dp24);
+    columns: 2;
+}
+
+.roleList li {
+    break-inside: avoid;
+    margin-block-end: 4px;
+}
+
+.missing {
+    color: var(--colors-grey700);
+    font-size: 12px;
+}
+
+.emptyText {
+    margin: 0;
+    color: var(--colors-grey600);
+    font-style: italic;
+}

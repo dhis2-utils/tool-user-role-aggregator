@@ -1,52 +1,42 @@
 {
-  "name": "tool_user_role_aggregator",
-  "description": "Tool to validate and create/modify user roles for users who should manage other users.",
-  "version": "0.3.1",
-  "dependencies": {
-    "axios": "^1.7.7",
-    "choices.js": "^11.0.2",
-    "jquery": "^3.7.1",
-    "material-design-icons": "^3.0.1",
-    "materialize-css": "^1.0.0-rc.2"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.15.0",
-    "copy-webpack-plugin": "^12.0.2",
-    "css-loader": "^7.1.2",
-    "d2-manifest": "^1.0.0",
-    "eslint": "^9.15.0",
-    "file-loader": "^6.2.0",
-    "globals": "^15.12.0",
-    "html-loader": "^5.1.0",
-    "html-webpack-plugin": "^5.6.3",
-    "style-loader": "^4.0.0",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
-  },
-  "main": "./src/app.js",
-  "scripts": {
-    "build": "webpack --progress",
-    "lint": "eslint src",
-    "manifest": "d2-manifest package.json build/manifest.webapp",
-    "postbuild": "npm run manifest",
-    "prebuild": "rm -rf build && npm run lint",
-    "start": "d2-manifest package.json manifest.webapp && webpack-dev-server",
-    "zip": "rm -rf compiled && npm run build && mkdir compiled && cd build && zip -r ../compiled/$npm_package_name.zip *"
-  },
-  "manifest.webapp": {
-    "developer": {
-      "company": "HISP Centre - Univeristy of Oslo",
-      "email": "dev@dhis2.org",
-      "name": "HISP Centre"
+    "name": "tool-user-role-aggregator",
+    "version": "1.0.0",
+    "description": "Tool to validate and create/modify user roles for users who should manage other users.",
+    "license": "BSD-3-Clause",
+    "private": true,
+    "packageManager": "pnpm@10.13.1",
+    "scripts": {
+        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy",
+        "lint": "eslint && prettier -c .",
+        "format": "prettier . -w"
     },
-    "icons": {
-      "48": "img/icons/app_logo_48x48.png",
-      "96": "img/icons/app_logo_96x96.png"
+    "dependencies": {
+        "@dhis2/app-runtime": "^3.15.1",
+        "@dhis2/ui": "^10.11.0",
+        "@hookform/resolvers": "^5.4.0",
+        "@tanstack/react-query": "^4.42.0",
+        "classnames": "^2.5.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-hook-form": "^7.81.0",
+        "react-router-dom": "^7.18.1",
+        "zod": "^4.3.6"
     },
-    "appType": "APP",
-    "name": "User Admin Role Aggregator"
-  }
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "12.10.3",
+        "@dhis2/config-eslint": "^0.2.2",
+        "@dhis2/config-prettier": "^0.2.2",
+        "@eslint/compat": "^2.0.0",
+        "@types/jest": "^30.0.0",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "eslint": "^9.39.2",
+        "eslint-import-resolver-typescript": "^4.4.5",
+        "prettier": "^3.7.4",
+        "typescript": "^5.9.3",
+        "vite": "^7.3.0"
+    }
 }

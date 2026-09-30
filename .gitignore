@@ -1,9 +1,16 @@
-.history
-.tmp
-compiled
-build
-manifest.webapp
+# DHIS2 Platform
 node_modules
+.d2
+src/locales
+build
+
+# pnpm
+.pnpm-store
+
+# e2e test output
+tests/e2e/output
+
+# OS / editor
+.DS_Store
 .vscode
-bin
-d2auth.json
+__pycache__/

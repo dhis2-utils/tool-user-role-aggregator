@@ -1,0 +1,77 @@
+.card {
+    background: var(--colors-white);
+    border-radius: 4px;
+    box-shadow: var(--elevations-e100);
+    padding: var(--spacers-dp24);
+}
+
+.title {
+    margin: 0 0 var(--spacers-dp8) 0;
+    font-size: 20px;
+    color: var(--colors-grey900);
+}
+
+.description {
+    margin: 0 0 var(--spacers-dp24) 0;
+    max-inline-size: 80ch;
+    color: var(--colors-grey700);
+}
+
+.field {
+    margin-block-end: var(--spacers-dp24);
+}
+
+.emptyText {
+    margin: 0 0 var(--spacers-dp24) 0;
+    color: var(--colors-grey600);
+    font-style: italic;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-block-size: 300px;
+}
+
+.sectionTitle {
+    margin: 0 0 var(--spacers-dp8) 0;
+    font-size: 16px;
+    color: var(--colors-grey900);
+}
+
+.search {
+    max-inline-size: 400px;
+}
+
+.resultList,
+.roleList {
+    margin: 0;
+    padding-inline-start: 0;
+    list-style: none;
+}
+
+.resultButton {
+    display: flex;
+    gap: var(--spacers-dp8);
+    inline-size: 100%;
+    padding: var(--spacers-dp8);
+    border: none;
+    border-block-end: 1px solid var(--colors-grey300);
+    background: none;
+    cursor: pointer;
+    text-align: start;
+    font-size: 14px;
+}
+
+.resultButton:hover {
+    background: var(--colors-grey100);
+}
+
+.username {
+    color: var(--colors-grey600);
+}
+
+.roleList li {
+    margin-block-end: 4px;
+}

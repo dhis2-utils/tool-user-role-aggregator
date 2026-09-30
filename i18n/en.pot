@@ -1,0 +1,248 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2026-08-19T14:02:03.591Z\n"
+"PO-Revision-Date: 2026-08-19T14:02:03.592Z\n"
+
+msgid "missing {{n}}"
+msgstr "missing {{n}}"
+
+msgid "show {{n}} more"
+msgstr "show {{n}} more"
+
+msgid "Roles: {{roles}} · Authorities: {{authorities}} combined"
+msgstr "Roles: {{roles}} · Authorities: {{authorities}} combined"
+
+msgid "Cannot administer users"
+msgstr "Cannot administer users"
+
+msgid ""
+"None of these roles grants an authority for administering users, so this "
+"combination cannot manage any users regardless of its other authorities. "
+"Add/Update User is the authority that grants it."
+msgstr ""
+"None of these roles grants an authority for administering users, so this "
+"combination cannot manage any users regardless of its other authorities. "
+"Add/Update User is the authority that grants it."
+
+msgid "Can administer users, via {{authority}}"
+msgstr "Can administer users, via {{authority}}"
+
+msgid "Limited to managed user groups"
+msgstr "Limited to managed user groups"
+
+msgid ""
+"This combination can only administer users in user groups it manages. "
+"Whether a given user falls inside those groups depends on user-group "
+"configuration, which this tool does not evaluate."
+msgstr ""
+"This combination can only administer users in user groups it manages. "
+"Whether a given user falls inside those groups depends on user-group "
+"configuration, which this tool does not evaluate."
+
+msgid "Can manage ({{n}})"
+msgstr "Can manage ({{n}})"
+
+msgid "No user roles can be managed."
+msgstr "No user roles can be managed."
+
+msgid "Cannot manage ({{n}})"
+msgstr "Cannot manage ({{n}})"
+
+msgid "All user roles can be managed."
+msgstr "All user roles can be managed."
+
+msgid "Error loading data"
+msgstr "Error loading data"
+
+msgid "Missing permissions"
+msgstr "Missing permissions"
+
+msgid "This page needs one of these authorities: {{authorities}}"
+msgstr "This page needs one of these authorities: {{authorities}}"
+
+msgid "Check access"
+msgstr "Check access"
+
+msgid "Role combination"
+msgstr "Role combination"
+
+msgid "Look up user"
+msgstr "Look up user"
+
+msgid "Manage roles"
+msgstr "Manage roles"
+
+msgid "Create new role"
+msgstr "Create new role"
+
+msgid "Update existing role"
+msgstr "Update existing role"
+
+msgid "User role updated successfully"
+msgstr "User role updated successfully"
+
+msgid "Failed to update user role: {{message}}"
+msgstr "Failed to update user role: {{message}}"
+
+msgid "User role created successfully"
+msgstr "User role created successfully"
+
+msgid "Failed to create user role: {{message}}"
+msgstr "Failed to create user role: {{message}}"
+
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+msgid "Check what a role combination can manage"
+msgstr "Check what a role combination can manage"
+
+msgid ""
+"Pick the roles a user holds. Their authorities are combined, because a user "
+"administers other users with everything their roles grant together, not "
+"with one role at a time."
+msgstr ""
+"Pick the roles a user holds. Their authorities are combined, because a user "
+"administers other users with everything their roles grant together, not "
+"with one role at a time."
+
+msgid "User roles held"
+msgstr "User roles held"
+
+msgid "user admin"
+msgstr "user admin"
+
+msgid "Select one or more roles to see what they can manage."
+msgstr "Select one or more roles to see what they can manage."
+
+msgid "Look up a user"
+msgstr "Look up a user"
+
+msgid ""
+"Search for a user to see which user roles they can manage, based on the "
+"authorities of all their roles combined."
+msgstr ""
+"Search for a user to see which user roles they can manage, based on the "
+"authorities of all their roles combined."
+
+msgid "Search by name or username"
+msgstr "Search by name or username"
+
+msgid "At least {{n}} characters"
+msgstr "At least {{n}} characters"
+
+msgid "Search failed"
+msgstr "Search failed"
+
+msgid "No users match that search."
+msgstr "No users match that search."
+
+msgid "Role name is required"
+msgstr "Role name is required"
+
+msgid "Select at least one role to manage or one additional authority"
+msgstr "Select at least one role to manage or one additional authority"
+
+msgid "Admin role for managing users with roles: {{roles}}"
+msgstr "Admin role for managing users with roles: {{roles}}"
+
+msgid "Role name"
+msgstr "Role name"
+
+msgid "Enter new role name"
+msgstr "Enter new role name"
+
+msgid "User roles to manage"
+msgstr "User roles to manage"
+
+msgid "Additional authorities"
+msgstr "Additional authorities"
+
+msgid "Only authorities you hold yourself are listed."
+msgstr "Only authorities you hold yourself are listed."
+
+msgid "This role cannot administer users"
+msgstr "This role cannot administer users"
+
+msgid ""
+"None of the selected roles or authorities grants Add/Update User, so "
+"members of this role will not be able to manage other users."
+msgstr ""
+"None of the selected roles or authorities grants Add/Update User, so "
+"members of this role will not be able to manage other users."
+
+msgid "Create role"
+msgstr "Create role"
+
+msgid "Create new user admin role"
+msgstr "Create new user admin role"
+
+msgid ""
+"Create a user role for user administrators: users who should manage other "
+"users. Pick the roles the administrator should be able to manage, and the "
+"new role will be given all authorities of those roles. This follows the "
+"DHIS2 user management concept that requires a user to have the same or more "
+"privileges than the users they manage."
+msgstr ""
+"Create a user role for user administrators: users who should manage other "
+"users. Pick the roles the administrator should be able to manage, and the "
+"new role will be given all authorities of those roles. This follows the "
+"DHIS2 user management concept that requires a user to have the same or more "
+"privileges than the users they manage."
+
+msgid "Update existing user role"
+msgstr "Update existing user role"
+
+msgid ""
+"Select an existing role and extend it with the authorities of additional "
+"roles so its members can manage users with those roles as well. Use \"Check "
+"what this role can manage\" to see which roles it can currently manage."
+msgstr ""
+"Select an existing role and extend it with the authorities of additional "
+"roles so its members can manage users with those roles as well. Use \"Check "
+"what this role can manage\" to see which roles it can currently manage."
+
+msgid "Check what this role can manage"
+msgstr "Check what this role can manage"
+
+msgid "Existing role"
+msgstr "Existing role"
+
+msgid "No roles match the filter"
+msgstr "No roles match the filter"
+
+msgid "Add managed roles"
+msgstr "Add managed roles"
+
+msgid "The authorities of the selected roles will be added to {{role}}"
+msgstr "The authorities of the selected roles will be added to {{role}}"
+
+msgid "Only roles whose authorities you hold yourself are listed."
+msgstr "Only roles whose authorities you hold yourself are listed."
+
+msgid "Add authorities to role"
+msgstr "Add authorities to role"
+
+msgid ""
+"There are no further roles you can add to this role. You can only add roles "
+"whose authorities you hold yourself."
+msgstr ""
+"There are no further roles you can add to this role. You can only add roles "
+"whose authorities you hold yourself."
+
+msgid "This role already has the authorities of every other user role."
+msgstr "This role already has the authorities of every other user role."
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "User Admin Role Aggregator"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr ""
+"Tool to validate and create/modify user roles for users who should manage "
+"other users."

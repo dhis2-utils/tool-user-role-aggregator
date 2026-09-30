@@ -1,0 +1,54 @@
+.card {
+    background: var(--colors-white);
+    border-radius: 4px;
+    box-shadow: var(--elevations-e100);
+    padding: var(--spacers-dp24);
+}
+
+.title {
+    margin: 0 0 var(--spacers-dp8) 0;
+    font-size: 20px;
+    color: var(--colors-grey900);
+}
+
+.description {
+    margin: 0 0 var(--spacers-dp24) 0;
+    max-inline-size: 80ch;
+    color: var(--colors-grey700);
+}
+
+.field {
+    margin-block-end: var(--spacers-dp24);
+}
+
+.fieldLabel {
+    display: block;
+    margin-block-end: var(--spacers-dp8);
+    font-size: 14px;
+    color: var(--colors-grey900);
+}
+
+.fieldHint {
+    display: block;
+    margin-block-start: calc(-1 * var(--spacers-dp4));
+    margin-block-end: var(--spacers-dp8);
+    font-size: 13px;
+    color: var(--colors-grey700);
+}
+
+.fieldError {
+    margin-block-start: var(--spacers-dp8);
+    font-size: 12px;
+    color: var(--colors-red600);
+}
+
+.nameInput {
+    max-inline-size: 400px;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-block-size: 300px;
+}
