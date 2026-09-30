@@ -21,13 +21,14 @@ jobs:
                   node-version: 22
                   cache: pnpm
 
-            - name: Verify tag matches package.json version
+            # Warn, never fail: a wrong release can be deleted and recreated, but a
+            # protected tag cannot be moved, so exiting here would burn the version.
+            - name: Check tag against package.json version
               run: |
                   VERSION=$(node -p "require('./package.json').version")
                   TAG="${GITHUB_REF_NAME#v}"
                   if [ "$VERSION" != "$TAG" ]; then
-                    echo "Tag $GITHUB_REF_NAME does not match package.json version $VERSION" >&2
-                    exit 1
+                    echo "::warning::Tag $GITHUB_REF_NAME does not match package.json version $VERSION; the attached bundle will carry $VERSION"
                   fi
 
             - name: Install dependencies
@@ -40,16 +41,22 @@ jobs:
               run: pnpm run build
 
             - name: Extract changelog section
+              # Tags are protected: they cannot be deleted or moved. So a missing
+              # changelog section must NOT fail the job — that would burn the
+              # version number with no way to retry it. Warn and fall back to a
+              # generic note instead.
               run: |
                   VERSION="${GITHUB_REF_NAME#v}"
                   awk -v ver="$VERSION" '
-                    $0 ~ "^## \\[" ver "\\]" { found = 1; next }
-                    found && /^## \[/ { exit }
+                    BEGIN { pat = ver; gsub(/\./, "\\.", pat) }
+                    # Accept both "## [1.2.3] - date" and "## 1.2.3 - date"
+                    $0 ~ "^## \\[?" pat "\\]?([^0-9]|$)" { found = 1; next }
+                    found && /^## / { exit }
                     found { print }
                   ' CHANGELOG.md > release-notes.md
                   if [ ! -s release-notes.md ]; then
-                    echo "No CHANGELOG.md section found for $VERSION" >&2
-                    exit 1
+                    echo "::warning::No CHANGELOG.md section for $VERSION; using a generic note"
+                    echo "Release $GITHUB_REF_NAME" > release-notes.md
                   fi
 
             - name: Create GitHub release
