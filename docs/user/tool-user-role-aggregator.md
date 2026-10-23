@@ -1,4 +1,4 @@
-# User Admin Role Aggregator { #tool-user-role-aggregator }
+# User Admin Role Aggregator { #tool-user-role-aggregator-guide }
 
 ## What the tool is for { #tool-user-role-aggregator-about }
 

@@ -18,6 +18,14 @@ if [ ${#missing[@]} -gt 0 ]; then
     exit 2
 fi
 export DHIS2_URL="${DHIS2_URL%/}"
+# The suite runs from e2e/, so a relative RESULTS_DIR must be resolved first.
+RESULTS_DIR="$(cd "$RESULTS_DIR" 2>/dev/null && pwd)" || {
+    echo "run.sh: RESULTS_DIR must be an existing directory" >&2
+    exit 2
+}
+export RESULTS_DIR
+# A stale results.json would make a crash below read as a test failure.
+rm -f "$RESULTS_DIR/results.json"
 
 if ! python3 -c 'import playwright' 2>/dev/null; then
     echo "run.sh: Playwright for Python is not installed (pip install -r e2e/requirements.txt)" >&2
