@@ -7,11 +7,64 @@ import { aggregateAuthorities, isUserAdminRole } from '@/domain/userRole'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import { useSystemAuthorities } from '@/hooks/useSystemAuthorities'
 import { useUserRoles } from '@/hooks/useUserRoles'
+import type { SearchedUser } from '@/hooks/useUserSearch'
 import {
     MIN_QUERY_LENGTH,
-    SearchedUser,
+    SEARCH_PAGE_SIZE,
     useUserSearch,
 } from '@/hooks/useUserSearch'
+
+const SearchResults = ({
+    users,
+    total,
+    isSearching,
+    onSelect,
+}: {
+    users?: SearchedUser[]
+    total?: number
+    isSearching: boolean
+    onSelect: (user: SearchedUser) => void
+}) => (
+    <>
+        {isSearching && <CircularLoader />}
+
+        {users?.length === 0 && (
+            <p className={styles.emptyText}>
+                {i18n.t('No users match that search.')}
+            </p>
+        )}
+
+        {users && users.length > 0 && (
+            <ul className={styles.resultList}>
+                {users.map((user) => (
+                    <li key={user.id}>
+                        <button
+                            type="button"
+                            className={styles.resultButton}
+                            onClick={() => onSelect(user)}
+                        >
+                            {user.displayName}
+                            {user.username && (
+                                <span className={styles.username}>
+                                    {user.username}
+                                </span>
+                            )}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        )}
+
+        {users && total !== undefined && total > users.length && (
+            <p className={styles.emptyText}>
+                {i18n.t(
+                    'Showing the first {{shown}} of {{total}} matches. Type more of the name to narrow the search.',
+                    { shown: SEARCH_PAGE_SIZE, total }
+                )}
+            </p>
+        )}
+    </>
+)
 
 export const CheckUserPage = () => {
     const [query, setQuery] = useState('')
@@ -20,6 +73,7 @@ export const CheckUserPage = () => {
 
     const {
         users,
+        total,
         isLoading: isSearching,
         error: searchError,
     } = useUserSearch(debouncedQuery)
@@ -87,33 +141,13 @@ export const CheckUserPage = () => {
                 </NoticeBox>
             )}
 
-            {!selectedUser && isSearching && <CircularLoader />}
-
-            {!selectedUser && users?.length === 0 && (
-                <p className={styles.emptyText}>
-                    {i18n.t('No users match that search.')}
-                </p>
-            )}
-
-            {!selectedUser && users && users.length > 0 && (
-                <ul className={styles.resultList}>
-                    {users.map((user) => (
-                        <li key={user.id}>
-                            <button
-                                type="button"
-                                className={styles.resultButton}
-                                onClick={() => setSelectedUser(user)}
-                            >
-                                {user.displayName}
-                                {user.username && (
-                                    <span className={styles.username}>
-                                        {user.username}
-                                    </span>
-                                )}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+            {!selectedUser && (
+                <SearchResults
+                    users={users}
+                    total={total}
+                    isSearching={isSearching}
+                    onSelect={setSelectedUser}
+                />
             )}
 
             {selectedUser && (

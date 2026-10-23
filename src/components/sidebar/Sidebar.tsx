@@ -7,7 +7,10 @@ import styles from './Sidebar.module.css'
 import { Sidenav, SidenavHeading, SidenavItems, SidenavLink } from './sidenav'
 import { useCurrentUserAuthorities } from '@/hooks/useCurrentUserAuthorities'
 
-type LinkItem = { to: string; label: string }
+interface LinkItem {
+    to: string
+    label: string
+}
 
 const SidebarNavLink = ({ to, label, end }: LinkItem & { end?: boolean }) => (
     <SidenavLink to={to} label={label} end={end} LinkComponent={NavLink} />
@@ -57,6 +60,10 @@ export const Sidebar = ({ className }: { className?: string }) => {
             <button
                 className={styles.collapseButton}
                 type="button"
+                aria-label={
+                    collapsed ? i18n.t('Expand menu') : i18n.t('Collapse menu')
+                }
+                aria-expanded={!collapsed}
                 onClick={() => setCollapsed(!collapsed)}
             >
                 <div

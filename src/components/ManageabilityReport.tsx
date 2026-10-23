@@ -7,7 +7,8 @@ import {
     AUTHORITY_USER_ADD_IN_GROUP,
     manageabilityReport,
 } from '@/domain/userRole'
-import { AUTHORITY_ALL, SystemAuthority, UserRole } from '@/types/userRole'
+import type { SystemAuthority, UserRole } from '@/types/userRole'
+import { AUTHORITY_ALL } from '@/types/userRole'
 
 const MISSING_PREVIEW_COUNT = 5
 

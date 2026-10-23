@@ -1,4 +1,4 @@
-import { SystemAuthority } from '@/types/userRole'
+import type { SystemAuthority } from '@/types/userRole'
 import { useApiDataQuery } from '@/utils/useApiDataQuery'
 
 interface AuthoritiesResponse {

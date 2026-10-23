@@ -33,6 +33,7 @@ export const UpdateRolePage = () => {
     const [roleIdsToAdd, setRoleIdsToAdd] = useState<string[]>([])
 
     const { addAuthoritiesToRole, isUpdating } = useAddAuthoritiesToRole({
+        heldAuthorities: myAuthorities,
         onSuccess: () => setRoleIdsToAdd([]),
     })
 

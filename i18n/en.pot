@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-08-19T14:02:03.591Z\n"
-"PO-Revision-Date: 2026-08-19T14:02:03.592Z\n"
+"POT-Creation-Date: 2026-10-23T07:32:11.474Z\n"
+"PO-Revision-Date: 2026-10-23T07:32:11.474Z\n"
 
 msgid "missing {{n}}"
 msgstr "missing {{n}}"
@@ -83,6 +83,26 @@ msgstr "Create new role"
 msgid "Update existing role"
 msgstr "Update existing role"
 
+msgid "Expand menu"
+msgstr "Expand menu"
+
+msgid "Collapse menu"
+msgstr "Collapse menu"
+
+msgid ""
+"One or more of the selected roles no longer exist. Reload the page and try "
+"again."
+msgstr ""
+"One or more of the selected roles no longer exist. Reload the page and try "
+"again."
+
+msgid ""
+"A selected role now has authorities you do not hold ({{authorities}}). "
+"Reload the page and try again."
+msgstr ""
+"A selected role now has authorities you do not hold ({{authorities}}). "
+"Reload the page and try again."
+
 msgid "User role updated successfully"
 msgstr "User role updated successfully"
 
@@ -94,6 +114,9 @@ msgstr "User role created successfully"
 
 msgid "Failed to create user role: {{message}}"
 msgstr "Failed to create user role: {{message}}"
+
+msgid "You do not hold these authorities and cannot grant them: {{authorities}}"
+msgstr "You do not hold these authorities and cannot grant them: {{authorities}}"
 
 msgid "An unknown error occurred"
 msgstr "An unknown error occurred"
@@ -119,6 +142,16 @@ msgstr "user admin"
 msgid "Select one or more roles to see what they can manage."
 msgstr "Select one or more roles to see what they can manage."
 
+msgid "No users match that search."
+msgstr "No users match that search."
+
+msgid ""
+"Showing the first {{shown}} of {{total}} matches. Type more of the name to "
+"narrow the search."
+msgstr ""
+"Showing the first {{shown}} of {{total}} matches. Type more of the name to "
+"narrow the search."
+
 msgid "Look up a user"
 msgstr "Look up a user"
 
@@ -137,9 +170,6 @@ msgstr "At least {{n}} characters"
 
 msgid "Search failed"
 msgstr "Search failed"
-
-msgid "No users match that search."
-msgstr "No users match that search."
 
 msgid "Role name is required"
 msgstr "Role name is required"

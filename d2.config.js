@@ -4,7 +4,7 @@ const config = {
     name: 'tool-user-role-aggregator',
     title: 'User Admin Role Aggregator',
     description:
-        'Tool to validate and create/modify user roles for users who should manage other users.',
+        'Checks which user roles a user administrator can manage, and creates or extends roles for user administrators.',
     minDHIS2Version: '2.40',
 
     entryPoints: {

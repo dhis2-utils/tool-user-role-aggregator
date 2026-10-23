@@ -21,7 +21,7 @@ import { useCreateUserRole } from '@/hooks/useCreateUserRole'
 import { useCurrentUserAuthorities } from '@/hooks/useCurrentUserAuthorities'
 import { useSystemAuthorities } from '@/hooks/useSystemAuthorities'
 import { useUserRoles } from '@/hooks/useUserRoles'
-import { SystemAuthority, UserRole } from '@/types/userRole'
+import type { SystemAuthority, UserRole } from '@/types/userRole'
 
 /** Authorities most user administrator roles need, preselected for convenience */
 const DEFAULT_AUTHORITIES = [
@@ -58,12 +58,14 @@ const CreateRoleForm = ({
     manageableRoles,
     systemAuthorities,
     isSuperuser,
+    heldAuthorities,
 }: {
     manageableRoles: UserRole[]
+    heldAuthorities: ReadonlySet<string>
     systemAuthorities: SystemAuthority[]
     isSuperuser: boolean
 }) => {
-    const schema = useMemo(buildSchema, [])
+    const schema = useMemo(() => buildSchema(), [])
     const { control, handleSubmit, reset } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -76,6 +78,7 @@ const CreateRoleForm = ({
     })
 
     const { createUserRole, isCreating } = useCreateUserRole({
+        heldAuthorities,
         onSuccess: () => reset(),
     })
 
@@ -285,6 +288,7 @@ export const CreateRolePage = () => {
                 manageableRoles={manageableRoles}
                 systemAuthorities={grantableAuthorities}
                 isSuperuser={isSuperuser}
+                heldAuthorities={myAuthorities}
             />
         </div>
     )

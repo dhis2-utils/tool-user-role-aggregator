@@ -8,6 +8,7 @@ import {
     isUserAdminRole,
     manageabilityReport,
     missingAuthorities,
+    ungrantableAuthorities,
 } from './userRole'
 
 const role = (authorities?: string[]): UserRole => ({
@@ -197,5 +198,26 @@ describe('manageabilityReport', () => {
         expect(report.blocked).toEqual([])
         expect(report.manageable).toHaveLength(2)
         expect(report.limitedToManagedGroups).toBe(false)
+    })
+})
+
+describe('ungrantableAuthorities', () => {
+    it('returns nothing for a superuser', () => {
+        const held = new Set([AUTHORITY_ALL])
+        expect(ungrantableAuthorities(held, ['F_X', AUTHORITY_ALL])).toEqual([])
+    })
+
+    it('returns the authorities the holder lacks, sorted and deduplicated', () => {
+        const held = new Set(['F_A'])
+        expect(
+            ungrantableAuthorities(held, ['F_Z', 'F_A', 'F_B', 'F_Z'])
+        ).toEqual(['F_B', 'F_Z'])
+    })
+
+    it('treats ALL as ungrantable for a non-superuser', () => {
+        const held = new Set(['F_A'])
+        expect(ungrantableAuthorities(held, [AUTHORITY_ALL])).toEqual([
+            AUTHORITY_ALL,
+        ])
     })
 })
