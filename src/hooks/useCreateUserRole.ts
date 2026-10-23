@@ -2,7 +2,9 @@ import { useDataEngine, useAlert } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { fetchRoleAuthorities } from './fetchRoleAuthorities'
+import { mutationErrorMessage } from './mutationErrorMessage'
 import { userRolesQueryKey } from './useUserRoles'
+import { ungrantableAuthorities } from '@/domain/userRole'
 
 export interface CreateUserRolePayload {
     name: string
@@ -12,13 +14,16 @@ export interface CreateUserRolePayload {
     additionalAuthorities: string[]
 }
 
-type UseCreateUserRoleOptions = {
+interface UseCreateUserRoleOptions {
+    /** The signed-in user's authorities; nothing beyond them is granted. */
+    heldAuthorities: ReadonlySet<string>
     onSuccess?: () => void
 }
 
 export const useCreateUserRole = ({
+    heldAuthorities,
     onSuccess,
-}: UseCreateUserRoleOptions = {}) => {
+}: UseCreateUserRoleOptions) => {
     const dataEngine = useDataEngine()
     const queryClient = useQueryClient()
 
@@ -31,6 +36,8 @@ export const useCreateUserRole = ({
             i18n.t('Failed to create user role: {{message}}', {
                 message,
                 nsSeparator: '###',
+                // Shown as plain text in the alert, so nothing to escape.
+                interpolation: { escapeValue: false },
             }),
         { critical: true }
     )
@@ -51,8 +58,25 @@ export const useCreateUserRole = ({
             // the page was loaded.
             const roleAuthorities = await fetchRoleAuthorities(
                 dataEngine,
-                roleIdsToManage
+                roleIdsToManage,
+                heldAuthorities
             )
+            const ungrantable = ungrantableAuthorities(
+                heldAuthorities,
+                additionalAuthorities
+            )
+            if (ungrantable.length > 0) {
+                throw new Error(
+                    i18n.t(
+                        'You do not hold these authorities and cannot grant them: {{authorities}}',
+                        {
+                            authorities: ungrantable.join(', '),
+                            nsSeparator: '###',
+                            interpolation: { escapeValue: false },
+                        }
+                    )
+                )
+            }
             const aggregated = new Set([
                 ...additionalAuthorities,
                 ...roleAuthorities,
@@ -63,7 +87,7 @@ export const useCreateUserRole = ({
                 data: {
                     name,
                     description,
-                    authorities: Array.from(aggregated),
+                    authorities: [...aggregated],
                 },
             })
         },
@@ -74,7 +98,7 @@ export const useCreateUserRole = ({
                 onSuccess?.()
             },
             onError: (error) => {
-                showErrorAlert({ message: error.message })
+                showErrorAlert({ message: mutationErrorMessage(error) })
             },
         }
     )

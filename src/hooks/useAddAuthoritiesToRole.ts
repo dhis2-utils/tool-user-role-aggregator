@@ -2,6 +2,7 @@ import { useDataEngine, useAlert } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { fetchRoleAuthorities } from './fetchRoleAuthorities'
+import { mutationErrorMessage } from './mutationErrorMessage'
 import { userRolesQueryKey } from './useUserRoles'
 
 export interface AddAuthoritiesPayload {
@@ -10,7 +11,9 @@ export interface AddAuthoritiesPayload {
     roleIdsToAdd: string[]
 }
 
-type UseAddAuthoritiesToRoleOptions = {
+interface UseAddAuthoritiesToRoleOptions {
+    /** The signed-in user's authorities; nothing beyond them is granted. */
+    heldAuthorities: ReadonlySet<string>
     onSuccess?: () => void
 }
 
@@ -21,8 +24,9 @@ type UseAddAuthoritiesToRoleOptions = {
  * submit time, so the merge is based on fresh data.
  */
 export const useAddAuthoritiesToRole = ({
+    heldAuthorities,
     onSuccess,
-}: UseAddAuthoritiesToRoleOptions = {}) => {
+}: UseAddAuthoritiesToRoleOptions) => {
     const dataEngine = useDataEngine()
     const queryClient = useQueryClient()
 
@@ -35,6 +39,8 @@ export const useAddAuthoritiesToRole = ({
             i18n.t('Failed to update user role: {{message}}', {
                 message,
                 nsSeparator: '###',
+                // Shown as plain text in the alert, so nothing to escape.
+                interpolation: { escapeValue: false },
             }),
         { critical: true }
     )
@@ -53,7 +59,7 @@ export const useAddAuthoritiesToRole = ({
                         params: { fields: ':owner' },
                     },
                 }) as Promise<{ userRole: { authorities?: string[] } }>,
-                fetchRoleAuthorities(dataEngine, roleIdsToAdd),
+                fetchRoleAuthorities(dataEngine, roleIdsToAdd, heldAuthorities),
             ])
 
             const mergedAuthorities = new Set([
@@ -67,7 +73,7 @@ export const useAddAuthoritiesToRole = ({
                 type: 'update',
                 data: {
                     ...userRole,
-                    authorities: Array.from(mergedAuthorities),
+                    authorities: [...mergedAuthorities],
                 },
             })
         },
@@ -80,7 +86,7 @@ export const useAddAuthoritiesToRole = ({
                 onSuccess?.()
             },
             onError: (error) => {
-                showErrorAlert({ message: error.message })
+                showErrorAlert({ message: mutationErrorMessage(error) })
             },
         }
     )

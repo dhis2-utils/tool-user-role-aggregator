@@ -1,67 +1,63 @@
-# User Role Aggregator Tool
+# User Admin Role Aggregator
 
 > ![Maturity: Validated](https://img.shields.io/badge/maturity-Validated-yellow)  
-> Intended use: Tool to validate and create/modify user roles for _user roles who should manage other users_.  
+> Intended use: check which user roles a user administrator can manage, and create or extend roles for user administrators.  
 > Maintainers: HISP Centre implementation team.
->
-> **WARNING**
-> This tool is intended to be used by system administrators to perform specific tasks, it is not intended for end users. It is available as a DHIS2 app, but has not been through the same rigorous testing as normal core apps. It should be used with care, and always tested in a development environment.
 
-The app is built with the [DHIS2 App Platform](https://developers.dhis2.org/docs/app-platform/getting-started) (React, TypeScript, `@dhis2/ui`). It requires DHIS2 2.40 or later.
+> [!WARNING]
+> This tool is for system administrators. It is a DHIS2 app, but it has not been through the testing of the core apps. Use it with care, and try it on a copy of your database first.
 
-## License
+The tool checks which user roles a combination of roles, or a user, can manage, and creates or extends user roles for user administrators. The user documentation is in [`docs/user/`](docs/user/tool-user-role-aggregator.md).
 
-© Copyright University of Oslo 2024
+## Supported DHIS2 versions
 
-## Getting started
+DHIS2 2.40 and later (`minDHIS2Version` in `d2.config.js`). The e2e suite runs on the last three DHIS2 majors.
 
-### Install dependencies
+## Prerequisites
 
-The project uses [pnpm](https://pnpm.io):
+- Node.js 22 and [pnpm](https://pnpm.io). The pnpm version is pinned in `packageManager` in `package.json`; `corepack enable` picks it up.
+- A DHIS2 instance to run against, for example a local one on port 8080. [DHIS2 in Docker](https://developers.dhis2.org/docs/tutorials/dhis2-docker/) describes how to start one.
 
-```
+## Develop
+
+Install the dependencies:
+
+```bash
 pnpm install
 ```
 
-### Start dev server
+Start the app against a local instance, then log in with that instance's credentials:
 
-To start the development server against a DHIS2 instance:
-
-```
+```bash
 pnpm start --proxy http://localhost:8080
 ```
 
-Replace the proxy URL with the DHIS2 instance you want to develop against, then log in with the instance's credentials.
+The app is built with the [DHIS2 App Platform](https://developers.dhis2.org/docs/app-platform/getting-started) (React, TypeScript, `@dhis2/ui`).
 
-### Compile to zip
+## Test, lint and build
 
-To build the app and produce a `.zip` file that can be installed in DHIS2 (written to `build/bundle/`):
-
-```
-pnpm run build
-```
-
-### Lint, format and test
-
-```
-pnpm run lint
-pnpm run format
-pnpm test
+```bash
+pnpm test          # unit tests, next to the code as src/**/*.test.ts
+pnpm run lint      # Ultracite: Oxlint and Oxfmt
+pnpm run format    # format with Oxfmt
+pnpm exec tsc --noEmit
+pnpm run build     # writes build/bundle/tool-user-role-aggregator-<version>.zip
 ```
 
-Unit tests live next to the code in `src/`. Playwright end-to-end tests (run against a disposable DHIS2 instance) live in `tests/e2e/` — see `tests/e2e/README.md`.
+Linting and formatting follow [LINTING.md](https://github.com/dhis2-utils/reference-tool-conventions/blob/main/LINTING.md) in reference-tool-conventions. `AGENTS.md` has the same rules for coding agents.
 
-### Releasing
+The end-to-end suite in `e2e/` drives the built app on a throwaway DHIS2 instance. It deletes data, so read [`e2e/README.md`](e2e/README.md) before you run it.
 
-`.github/workflows/ci.yml` lints, typechecks, tests and builds every pull request. A release is cut only when a version tag is pushed:
+## Release
 
-1. Bump `version` in `package.json` and add the matching section to `CHANGELOG.md`.
-2. Push a `v<version>` tag (e.g. `v1.0.0`).
+CI (`.github/workflows/ci.yml`) lints, typechecks, tests and builds every pull request. A release is made by pushing a version tag:
 
-`.github/workflows/release.yml` then verifies that the tag matches `package.json`, builds the app, and publishes a GitHub release with that CHANGELOG section as the notes and the bundle zip attached.
+1. Bump `version` in `package.json`, and add a `## [x.y.z] - YYYY-MM-DD` section to `CHANGELOG.md`.
+2. Merge to `main` and wait for CI to pass.
+3. On an up-to-date `main`, run `git tag vx.y.z && git push origin vx.y.z`.
 
-## Documentation
+`.github/workflows/release.yml` then builds the app and publishes a GitHub release with the changelog section as notes and the bundle attached. The full procedure is in [RELEASE-WORKFLOW.md](https://github.com/dhis2-utils/reference-tool-conventions/blob/main/RELEASE-WORKFLOW.md) in reference-tool-conventions.
 
-- `docs/MANUAL.md` — user manual (installation and usage)
-- `docs/review-2026-07-09/` — findings and test results from the App Platform migration review
-- `docs/review-2026-08-18/` — release-readiness test results on DHIS2 2.41 and 2.42
+## License
+
+BSD-3-Clause, © University of Oslo. See [LICENSE](LICENSE).

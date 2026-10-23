@@ -1,4 +1,5 @@
-import { AUTHORITY_ALL, UserRole } from '../types/userRole'
+import type { UserRole } from '../types/userRole'
+import { AUTHORITY_ALL } from '../types/userRole'
 
 /** Lets a user administer any user. */
 export const AUTHORITY_USER_ADD = 'F_USER_ADD'
@@ -42,6 +43,19 @@ export const canGrantAuthority = (
     authorityId: string
 ): boolean =>
     heldAuthorities.has(AUTHORITY_ALL) || heldAuthorities.has(authorityId)
+
+/**
+ * The authorities in `authorities` that a holder of `heldAuthorities` may
+ * not grant, sorted. Empty for a superuser. Used to re-check, at submit
+ * time, roles whose authorities changed after the picker was filled.
+ */
+export const ungrantableAuthorities = (
+    heldAuthorities: ReadonlySet<string>,
+    authorities: Iterable<string>
+): string[] =>
+    [...new Set(authorities)]
+        .filter((authority) => !canGrantAuthority(heldAuthorities, authority))
+        .sort((a, b) => a.localeCompare(b))
 
 /** Union of the authorities of every given role. */
 export const aggregateAuthorities = (roles: UserRole[]): Set<string> =>

@@ -1,0 +1,4 @@
+# Vendored Ultracite agent skill, pinned by skills-lock.json
+.agents/
+skills-lock.json
+pnpm-lock.yaml

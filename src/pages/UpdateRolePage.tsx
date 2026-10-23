@@ -11,7 +11,7 @@ import {
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './UpdateRolePage.module.css'
-import { canManageRole } from '@/domain/userRole'
+import { canManageRole, isUserAdminRole } from '@/domain/userRole'
 import { useAddAuthoritiesToRole } from '@/hooks/useAddAuthoritiesToRole'
 import { useCurrentUserAuthorities } from '@/hooks/useCurrentUserAuthorities'
 import { useUserRoles } from '@/hooks/useUserRoles'
@@ -33,10 +33,17 @@ export const UpdateRolePage = () => {
     const [roleIdsToAdd, setRoleIdsToAdd] = useState<string[]>([])
 
     const { addAuthoritiesToRole, isUpdating } = useAddAuthoritiesToRole({
+        heldAuthorities: myAuthorities,
         onSuccess: () => setRoleIdsToAdd([]),
     })
 
-    const selectedRole = userRoles?.find((role) => role.id === selectedRoleId)
+    // Only roles that already administer users: the page extends what a
+    // user admin role can manage, it does not make a role a user admin role.
+    const adminRoles = useMemo(
+        () => (userRoles ?? []).filter(isUserAdminRole),
+        [userRoles]
+    )
+    const selectedRole = adminRoles.find((role) => role.id === selectedRoleId)
 
     const { candidateRoles, hasRolesBeyondReach } = useMemo(() => {
         if (!userRoles || !selectedRole) {
@@ -99,11 +106,11 @@ export const UpdateRolePage = () => {
     return (
         <div className={styles.card}>
             <h1 className={styles.title}>
-                {i18n.t('Update existing user role')}
+                {i18n.t('Update existing user admin role')}
             </h1>
             <p className={styles.description}>
                 {i18n.t(
-                    'Select an existing role and extend it with the authorities of additional roles so its members can manage users with those roles as well. Use "Check what this role can manage" to see which roles it can currently manage.'
+                    'Select an existing user admin role, a role whose members can manage users, and extend it with the authorities of additional roles so its members can manage users with those roles as well. Use "Check what this role can manage" to see which roles it can currently manage.'
                 )}
             </p>
             {selectedRole && (
@@ -113,10 +120,17 @@ export const UpdateRolePage = () => {
                     </Link>
                 </p>
             )}
+            {adminRoles.length === 0 && (
+                <p className={styles.emptyText}>
+                    {i18n.t(
+                        'There are no user admin roles to update. Use "Create new role" to create one.'
+                    )}
+                </p>
+            )}
             <div className={styles.field}>
                 <SingleSelectField
                     className={styles.roleSelect}
-                    label={i18n.t('Existing role')}
+                    label={i18n.t('Existing user admin role')}
                     selected={selectedRoleId}
                     onChange={({ selected }) => {
                         setSelectedRoleId(selected)
@@ -125,7 +139,7 @@ export const UpdateRolePage = () => {
                     filterable
                     noMatchText={i18n.t('No roles match the filter')}
                 >
-                    {userRoles.map((role) => (
+                    {adminRoles.map((role) => (
                         <SingleSelectOption
                             key={role.id}
                             label={role.displayName}

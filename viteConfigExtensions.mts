@@ -1,7 +1,8 @@
 import path from 'node:path'
-import { defineConfig, ConfigEnv } from 'vite'
+import type { ConfigEnv } from 'vite'
+import { defineConfig } from 'vite'
 
-const viteConfig = defineConfig(async (configEnv: ConfigEnv) => {
+const viteConfig = defineConfig((configEnv: ConfigEnv) => {
     const { mode } = configEnv
     return {
         // In dev environments, don't clear the terminal after files update
