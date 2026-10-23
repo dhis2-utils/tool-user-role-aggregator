@@ -86,14 +86,14 @@ The tool lists only the roles and authorities that you hold yourself, so you can
 
 ## Add managed roles to an existing role { #tool-user-role-aggregator-update }
 
-Use this task when a user administrator must manage more roles than before. The tool adds the authorities of the roles that you choose to an existing role.
+Use this task when a user administrator must manage more roles than before. The tool adds the authorities of the roles that you choose to an existing user admin role: a role with **Add/Update User** or **Add/Update User Within Managed Group**. Other roles are not listed. To make a user admin role, use **Create new role**.
 
 > **Warning**
 >
 > The change affects every user who holds the existing role.
 
 1. In the sidebar, under **Manage roles**, click **Update existing role**.
-2. In **Existing role**, choose the role to change.
+2. In **Existing user admin role**, choose the role to change.
 3. In **Add managed roles**, choose the roles that the existing role must also be able to manage.
 4. Click **Add authorities to role**.
 

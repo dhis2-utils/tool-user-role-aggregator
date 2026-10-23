@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Update existing role** lists only user admin roles, that is roles with Add/Update User or Add/Update User Within Managed Group. Before, it also offered roles whose members cannot manage users, where adding managed roles has no effect.
 - The list of user roles is refreshed when you return to a page or the window, at most once a minute, so roles changed in another app show up without a full reload.
 - A failed create or update shows the server's reason, such as a role name that is already taken, instead of a generic message.
 - The user search says when more users match than it shows, and no longer lets you pick a user from the previous search while a new one is loading.

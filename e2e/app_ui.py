@@ -20,7 +20,7 @@ CANNOT_MANAGE_LIST = '[data-test="cannot-manage-list"] li'
 
 CHECK_HEADING = "Check what a role combination can manage"
 CREATE_HEADING = "Create new user admin role"
-UPDATE_HEADING = "Update existing user role"
+UPDATE_HEADING = "Update existing user admin role"
 LOOKUP_HEADING = "Look up a user"
 NAV_CHECK = "Role combination"
 NAV_LOOKUP = "Look up user"
@@ -122,6 +122,16 @@ class Session:
     def transfer_picked(self, transfer_index):
         transfer = self.frame().locator(TRANSFER).nth(transfer_index)
         return [t.strip() for t in transfer.locator(f"{TRANSFER_PICKED} {TRANSFER_OPTION}").all_inner_texts()]
+
+    def select_options(self):
+        """Labels in the first single select, which is closed again after."""
+        frame = self.frame()
+        frame.locator(SELECT).first.click()
+        frame.locator(SELECT_OPTION).first.wait_for()
+        labels = [t.strip() for t in frame.locator(SELECT_OPTION).all_inner_texts()]
+        self.page.keyboard.press("Escape")
+        self.page.wait_for_timeout(SETTLE_MS)
+        return labels
 
     def select_option(self, label):
         frame = self.frame()

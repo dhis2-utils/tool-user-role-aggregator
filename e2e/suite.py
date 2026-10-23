@@ -292,6 +292,12 @@ class Run:
     def update_role(self, session, role_name, role_id):
         r = self.results
         session.navigate(NAV_UPDATE, UPDATE_HEADING)
+        offered = session.select_options()
+        r.check(
+            "update-offers-only-admin-roles",
+            role_name in offered and not {self.seed["clerk"]["name"], self.seed["analyst"]["name"]} & set(offered),
+            f"{len(offered)} roles offered",
+        )
         session.select_option(role_name)
         session.transfer_pick(0, self.seed["analyst"]["name"])
         session.click_button("Add authorities to role")
